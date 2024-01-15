@@ -1,0 +1,216 @@
+===================================================================================================================
+SINGELETON OBJECT
+===================================================================================================================
+An object is a class that has exactly one instance. It is created lazily when it is referenced, like a lazy val.
+
+
+object Collection extends App{}
+
+===================================================================================================================
+FUNCTIONS
+===================================================================================================================
+CW1) Create a function to compute sum  of given two numbers.
+
+def sum(a:Int,b:Int):Int={
+return a+b
+}
+
+def gcdLoop(x: Long, y: Long): Long = {
+var a = x
+var b = y
+while (a != 0) {
+val temp = a
+a = b % a
+b = temp
+}
+ b
+}
+
+// This is not tail recursion
+
+def factorial(n: Long): Long ={
+
+if (n<=1) 1
+
+else {  // It creates entire stack frame that JVM needs to compute the intermediate results
+ println("Computing factorial of " + n + " ~ I first need factorial of " + (n-1))
+ val result = n* factorial(n-1)
+ println("Computed factorial of " + n)
+ 
+ result 
+ }
+}
+
+// This can result in StackOverflowError when the recursive depth is too big
+// So how this problem can be solved . It could be solved with tail recursion
+// The above the code is not tail recursive
+
+--------------------------------------------------------------------------------------------------------------
+Tail Recursion - the resursion call is the last expression of the code path 
+--------------------------------------------------------------------------------------------------------------
+
+def anotherFactorial(n: Long): BigInt ={
+
+def factHelper(x:Long,accumulator:BigInt):BigInt={
+if (x <= 1) accumulator
+else factHelper(x-1, x * accumulator)
+}
+factHelper(n,1)
+}
+
+//As the recursive call was tail recursion- the resursion call is the last expression of the code path 
+// so this allows Scala to  use same stack frame not 
+
+
+CW1 --Create a tail recursive function to compute the greatest common divisor between two numbers.
+
+def gcdLoop(x: Long, y: Long): Long ={
+
+if(y==0) x
+
+else gcdLoop(y,x%y)
+
+}
+
+
+def fibonaci(n: Int): Long ={
+
+if (n ==0 ) 0
+else if (n==1) 1
+else  fibonaci(n-1) + fibonaci(n-2)
+
+}
+
+def fibonaci(n :Int) : Int= {
+   def fiboTailRec(i:Int, last: Int, nextToLast: Int): Int =
+    if(i >= n) last
+	else fiboTailRec(i+1, last + nextToLast, last)
+	
+	if (n <= 2) 1
+	else fiboTailRec(2,1,1)
+   
+   }
+
+
+
+===================================================================================================================
+Functions literals
+===================================================================================================================
+
+ the following code is a function literal (also known as an anonymous
+function):
+
+(i: Int) =>{ i % 2 == 0}
+
+
+
+The following examples show different forms you can use to explicitly declare that your function returns a Boolean:
+
+val f: (Int) => Boolean = i => { i % 2 == 0 }
+val f: Int => Boolean = i => { i % 2 == 0 }
+val f: Int => Boolean = i => i % 2 == 0
+val f: Int => Boolean = _ % 2 == 0
+
+(a:Int,b:Int) => a*b
+
+val add:(Int,Int) => Int = (a:Int,b:Int) => a*b
+
+
+val addThenDouble: (Int, Int) => Int = (x,y) => {
+val a = x + y
+2 * a
+}
+
+
+-------------------------------------------------------------------------------------------------------------------
+Higher Order Function
+-------------------------------------------------------------------------------------------------------------------
+A function is called Higher Order Function if it contains other functions as a parameter or returns a function as an output i.e, the functions that operate with another functions are known as Higher order Functions.
+
+def mathOperation (f:(Int,Int)=> Int,x:Int,y:Int)= f(x,y)
+val sum = mathOperation((x,y)=>x+y,10,15)
+
+val minus= mathOperation((x,y)=>x-y,10,15)
+
+val multiply = mathOperation((x,y)=>x*y,10,15)
+
+
+Partially Applied Function - A partially applied function is an expression in which you don’t supply all of the arguments needed by the function. Instead, you supply some, or none, of the needed arguments.
+
+val sum = mathOperation((x,y)=>x+y,_:Int,_:Int)
+val minus = mathOperation((x,y)=>x-y,_:Int,_:Int)
+
+
+
+Do not teach Currying
+Currying
+def mathOperation (f:(Int,Int)=> Int)(x:Int,y:Int)= f(x,y)
+
+
+val sum = mathOperation((x:Int,y:Int)=>x+y)(_,_)
+
+
+
+
+
+Built in HOF 
+--------------------------------------------------------------------------
+Foreach
+--------------------------------------------------------------------------
+a foreach method is available for all collections. It takes a function as an
+argument and invokes that function on each of its elements. Here is how it
+can be used to print out all of the elements of a list:
+
+val someNumbers = List(-11,-10,-5,1,2,3,4,0,5,10)
+someNumbers.foreach((x: Int) => println(x))
+
+someNumbers.filter((x: Int) => x>0 )
+
+placeholder syntax
+---------------------
+
+someNumbers.filter(_ > 0)
+
+
+==========================================================================================================
+ Transforming One Collection to Another with map
+==========================================================================================================
+
+val empName= List("Ashish","Ram","Shyam","Krsna")
+
+val caps= empName.map(x=> x.toUpperCase)
+
+val fullName = List("Pankaj Sharma", "Sachin Tendulkar", "Virat Kohli","Krishna Singh","Narendra Modi")
+
+val lastName = fullName.map{elem => elem.split(" ")(1)}
+
+----------------------------------------------------------------------------------------------------------
+Flattening a List of Lists with flatten
+----------------------------------------------------------------------------------------------------------
+
+val lol = List(List(1,2), List(3,4),List(5,6),List(7,8))
+
+val result = lol.flatten
+
+val couples = List(List("Virat", "Anushka"),List("Ram","Sita"),List("Ramesh","Jaya"))
+
+val people = couples.flatten
+val people = couples.flatten.map(_.toUpperCase)
+
+------------------------------------------------------------------------------------------------------------
+Combining map and flatten with flatMap
+------------------------------------------------------------------------------------------------------------
+
+
+val people = couples.flatMap(x=>x.map(x=>x.toUpperCase))
+
+val num = lol.flatMap(x=>x)
+
+
+------------------------------------------------------------------------------------------------------------
+reduceLeft, foldLeft, reduceRight, and foldRight
+------------------------------------------------------------------------------------------------------------
+use reduceLeft to walk through a sequence from left to right (from
+the first element to the last). reduceLeft starts by comparing the first two elements in
+the collection with your algorithm, and returns a result. That result is compared with the third element, and that comparison yields a new result. That result is compared to the fourth element to yield a new result, and so on.
+

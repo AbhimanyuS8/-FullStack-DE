@@ -1,0 +1,346 @@
+product,stores,quantity_sold,sales_amount,sold_date,stores,city
+
+---------------------------------------------------------------
+beeline -u jdbc:hive2://ec2-13-53-107-182.eu-north-1.compute.amazonaws.com:10000/default
+
+jdbc:hive2://localhost:10000/default
+
+beeline -u "jdbc:hive2://localhost:10000/default;principal=hive/_HOST@REALM"
+-----------------------------------------------------------------------------------
+
+
+In This tutorial - we will learn what is partitioning and how to create partition and buckets.
+Concept of Partition in Hive. Various ways of loading the data in partition.
+
+
+show databases;
+
+create database if not exists batch_jan;
+
+use batch_jan;
+
+=======================================================================================================================
+MANAGED non Partitioned TABLE
+=======================================================================================================================
+
+use batch_jan;
+create table SALES_STG(
+
+product string,
+quantity_sold INT,
+sales_amount DOUBLE,
+sold_date String,
+stores string,
+city string
+) 
+row format delimited
+fields terminated by ','
+stored as textfile;
+
+
+show tables;
+
+describe SALES_STG;
+
+describe formatted SALES_STG;
+
+check where the hive table is created.
+
+/user/hive/warehouse/batch_jan.db/sales_stg
+
+hdfs dfs -ls /user/hive/warehouse/batch_jan.db/
+
+copy the file from s3 to aws
+
+aws s3 cp s3://aws-logs-545689797500-eu-north-1/elasticmapreduce/j-3QV3XGBHZBPKC/data-1/more_sales_data.csv ./
+
+
+Two ways to load the data into table /user/hive/warehouse/batch_jan.db/sales_stg/
+
+WAYS TO LOAN THE DATA INTO TABLE
+---------------------------------------------------------------------------------------------------------------------------------
+Loading Data into Managed Table - Non Partitioned
+---------------------------------------------------------------------------------------------------------------------------------
+
+
+1) Using load data inpath command on Hive CLI or beeline to load the file 
+---------------------------------------------------------------------------------------------------------------------------------
+a) If the file is present locally on edge node.
+load data local inpath '/home/hadoop/data/more_sales_data.csv'  into table batch_jan.sales_stg;
+
+The data is refreshed in the table no msck repair required;
+
+b) If the file is present on HDFS. Hive Load File from Hdfs into Partitioned table
+
+hdfs dfs -mkdir /user/data
+hdfs dfs -put sales_data_full.csv /user/data/
+
+load data inpath '/user/data/sales_data_full.csv'  into table batch_jan.sales_stg;
+
+
+2) Using Hdfs command to load the data into  table
+---------------------------------------------------------------------------------------------------------------------------------
+
+hdfs dfs -put /home/hadoop/data/sales_data_full.csv /user/hive/warehouse/batch_jan.db/sales_stg/
+
+we can also copy the file if its present on hdfs 
+
+
+==================================================================================================================================
+Partitioned MANAGED TABLE
+==================================================================================================================================
+use batch_jan;
+create table SALES_STG_PART(
+
+product string,
+quantity_sold INT,
+sales_amount DOUBLE,
+sold_date String,
+stores string
+)
+partitioned by (city String)
+row format delimited
+fields terminated by ','
+stored as textfile
+LOCATION '/user/hive/warehouse/batch_jan/training/SALES_STG_PART';
+;
+
+
+aws s3 cp
+
+-----------------------------------------------
+Loading Data into MANAGED PARTITIONED Table
+-----------------------------------------------
+
+
+
+1) Using load data inpath command on Hive CLI or beeline to load the file
+------------------------------------------------------------------------- 
+
+Note: Remember the partitioned column should be the last column on the file to loaded data into right partitioned column of the table.
+
+load data local inpath '/home/hadoop/data/more_sales_data.csv'  into table batch_jan.SALES_STG_PART;
+
+select * from SALES_STG_PART;
+
+2) Using Hdfs command to load the data into partitioned table
+-------------------------------------------------------------------------
+
+we have to create the directory of the partitioned column
+
+hdfs dfs -mkdir /user/hive/warehouse/batch_jan/training/SALES_STG_PART/city=NOIDA
+
+ALTER TABLE SALES_STG_PART ADD PARTITION (city = 'NOIDA') 
+
+
+hdfs dfs -put /home/hadoop/data/NOIDA_sales_data.csv /user/hive/warehouse/batch_jan.db/training/SALES_STG_PART/city=NOIDA
+
+MSCK REPAIR NOT REQUIRED in MANAGED TABLE
+msck repair table SALES_STG_PART;
+
+
+3) INSERTING DATA FROM OTHER TABLES
+-----------------------------------------
+
+use batch_jan;
+INSERT INTO TABLE SALES_STG_PART PARTITION(city='VARANASI') VALUES ('Samsung Galaxy',15,1250.78,'2023-08-22','Chroma');
+
+
+INSERT OVERWRITE TABLE SALES_STG_PART PARTITION(city) SELECT product,quantity_sold,sales_amount,sold_date,stores,city from SALES_STG;
+
+Note. Insert into the partitioned table by selecting columns from the non-partitioned table (make sure you select city(partitioned column) at the end).
+
+
+DROP table SALES_STG_PART;
+
+Check the data after the dropping of the table the data is also deleted.
+
+hdfs dfs -ls /user/hive/warehouse/batch_jan.db/
+
+
+
+==================================================================================================================================
+Partitioned EXTRENAL TABLE
+==================================================================================================================================
+
+
+create EXTERNAL table SALES_STG_PART(
+
+product string,
+quantity_sold INT,
+sales_amount DOUBLE,
+sold_date String,
+city string,
+stores string
+)
+partitioned by (city String
+fields terminated by ','
+stored as textfile
+LOCATION '/user/hive/warehouse/batch_jan/training/SALES_STG_PART';
+
+
+
+
+
+aws s3 cp
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+Loading Data into Partitioned Table
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+1) Using load data inpath command on Hive CLI or beeline to load the file
+------------------------------------------------------------------------- 
+
+Note: Remember the partitioned column should be the last column on the file to loaded data into right partitioned column of the table.
+
+load data local inpath '/home/hadoop/data/more_sales_data.csv'  into table batch_jan.SALES_STG_PART;
+
+select * from SALES_STG_PART
+
+check the data loan in the table and directory structure
+
+
+2) Using Hdfs command to load the data into partitioned table
+-------------------------------------------------------------------------
+
+we have to create the directory of the partitioned column
+
+ALTER TABLE SALES_STG_PART ADD PARTITION (city = 'NOIDA')
+hdfs dfs -put NOIDA_sales_data.csv /user/hive/warehouse/batch_jan/training/SALES_STG_PART/city=NOIDA/
+
+
+hdfs dfs -mkdir /user/hive/warehouse/batch_jan/training/SALES_STG_PART/city=PUNE
+hdfs dfs -put pune_sales_data.csv /user/hive/warehouse/batch_jan/training/SALES_STG_PART/city=PUNE/
+
+MSCK REPAIR NOT REQUIRED in MANAGED TABLE
+msck repair table SALES_STG_PART;
+
+
+3) INSERTING DATA FROM OTHER TABLES
+-----------------------------------------
+
+Before that delete all partitions 
+
+hdfs dfs -rm -r -f /user/hive/warehouse/batch_jan/training/SALES_STG_PART/*
+
+Alter Table SALES_STG_PART DROP PARTITION (city = 'PUNE');
+
+DROP multiple partitions as well
+
+Alter Table SALES_STG_PART DROP PARTITION (city = 'PUNE' | city='CHENNAI');
+
+Alter Table SALES_STG_PART DROP PARTITION (city <> 'PUNE');
+
+Alter Table SALES_STG_PART DROP PARTITION (city = 'PUNE', stores='RelainceDigital');
+
+
+
+use batch_jan;
+INSERT INTO TABLE SALES_STG_PART PARTITION(city='VARANASI') VALUES ('Samsung Galaxy',15,1250.78,'2023-08-22','Chroma');
+
+Note. Insert into the partitioned table by selecting columns from the non-partitioned table (make sure you select state at the end)
+INSERT OVERWRITE TABLE SALES_STG_PART PARTITION(city) SELECT product,quantity_sold,sales_amount,sold_date,stores,city from SALES_STG;
+****** FAILED: SemanticException [Error 10096]: Dynamic partition strict mode requires at least one static partition column. To turn this off set hive.exec.dynamic.partition.mode=nonstrict
+
+
+set hive.exec.dynamic.partition=true;
+set hive.exec.dynamic.partition.mode=nonstrict;
+set hive.exec.max.dynamic.partitions=1000;
+set hive.exec.max.dynamic.partitions.pernode=1000;
+set hive.enforce.bucketing=true;
+
+INSERT INTO TABLE SALES_STG_PART PARTITION(city='Aurangabad')   SELECT product,quantity_sold,sales_amount,sold_date,stores from SALES_STG;
+
+DELETE THE MANAGED AND EXTERNAL TABLE and show the difference.
+
+H/W Assignement -1
+
+Give the customer data and ask to create a customer_stg (managed) and external partition table (customer_stg_part) and load the data using all the 3 ways below.
+
+Create a multi partition table and load the Data using 
+1) Beeline / Hive CLI - load data inpath
+2) Using hdfs command - hdfs -put 
+3) Load it using Insert Into query from other non partitioned table
+
+-------------------------------------------------------------------------------------------------------------------------------------
+Multi Partition Table
+-------------------------------------------------------------------------------------------------------------------------------------
+create EXTERNAL table SALES_STG_PART(
+
+product string,
+quantity_sold INT,
+sales_amount DOUBLE,
+sold_date String,
+city string,
+
+)
+partitioned by (city String,stores String) 
+row format delimited
+fields terminated by ','
+stored as textfile
+LOCATION '/user/hive/warehouse/batch_jan/training/SALES_STG_PART';
+
+
+
+
+
+
+
+
+
+
+
+Following Queries on These datasets.
+
+
+
+SELECT Product, AVG(Sales_Amount) AS Average_Sales_Amount
+FROM sales_stg
+GROUP BY Product;
+
+
+1)calculate the total sales amount for each region:
+
+SELECT city, SUM(Sales_Amount) AS Total_Sales_Amount
+FROM sales_stg
+GROUP BY city;
+
+
+SELECT city, SUM(Sales_Amount) AS Total_Sales_Amount
+FROM sales_stg_part
+GROUP BY city;
+
+
+2)find the maximum quantity sold for each product:
+
+SELECT Product, MAX(Quantity_Sold) AS Max_Quantity_Sold
+FROM sales_stg
+GROUP BY Product;
+
+
+3)Show the total sales amount between specific dates:
+
+SELECT SUM(Sales_Amount) AS Total_Sales_Amount
+FROM sales_stg
+WHERE Sold_Date BETWEEN '2023-08-01' AND '2023-08-31';
+
+4) lists the products sold in each store
+
+SELECT Stores, collect_set(Product) AS Products_Sold
+FROM sales_stg
+GROUP BY Stores;
+
+5) provides a monthly sales report 
+SELECT DATE_FORMAT(Sold_Date, 'yyyy-MM') AS Month, SUM(Sales_Amount) AS Monthly_Sales_Amount
+FROM sales_stg
+GROUP BY DATE_FORMAT(Sold_Date, 'yyyy-MM')
+ORDER BY Month;
+
+
+
+
+
+
+

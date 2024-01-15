@@ -1,0 +1,94 @@
+--------------------------------------------------------------------------------------------------------------------
+Assignment 1) Loading the Data into managed table - Non Partitioned. Perform following set of Tasks
+--------------------------------------------------------------------------------------------------------------------
+Task-1 Create a database - batch_jan
+Task-2 Create a managed non partitioned table called SALES_STG with follwing schema and the location of the data would be - /user/hive/warehouse/batch_jan/training/SALES_STG
+
+product string,
+quantity_sold INT,
+sales_amount DOUBLE,
+sold_date String,
+stores string,
+city string
+
+
+Task -3 Load the data into the table using load data inpath command on Hive CLI or beeline to load the file
+
+copy the more_sales_data.csv file to the hdfs table location
+
+Check and verify If the data is loaded correctly.
+
+Task-4 Load the data into the table using Hdfs command to load the data into table
+
+copy the file sales_data_full.csv to the table loaction
+
+Check and verify If the data is loaded correctly.
+
+Note> Data set used -
+more_sales_data.csv
+sales_data_full.csv
+
+Drop the table and check of the data is also deleted from the hdfs path.
+
+
+Assignment 2) Loading the Data into an External Partition table. Perform following set of Tasks
+Task-1 Create a database - batch_jan (If NOT EXISTS)
+Task-2 Create an External partitioned table called SALES_STG_PART with following schema and the location of the data would be - /user/hive/warehouse/batch_jan/training/SALES_STG_PART
+Table is partitioned by city.
+
+product string,
+quantity_sold INT,
+sales_amount DOUBLE,
+sold_date String,
+stores string,
+city string
+
+
+Task -3 Load the data into the table using load data inpath command on Hive CLI or beeline to load the file
+
+copy the more_sales_data.csv file to the hdfs table location
+
+Check and verify If the data is loaded correctly.
+
+Task-4 Load the data into the table using Hdfs command to load the data into table
+
+copy the file sales_data_full.csv to the table loaction
+
+Check and verify If the data is loaded correctly.
+
+Task-5 Load the data into the table using the INSERT OVERWRITE AND INSERT INTO COMMANDS from SALES_STG table into SALES_STG_PART.
+
+--------------------------------------------------------------------------------------------------------------------
+Assignment 2) Loading the Data into an External Partition table. Perform following set of Tasks
+--------------------------------------------------------------------------------------------------------------------
+Task-1 Create a database - batch_jan (If NOT EXISTS)
+Task-2 Create an External partitioned table called SALES_STG_PART with following schema and the location of the data would be - /user/hive/warehouse/batch_jan/training/SALES_STG_PART
+Table is partitioned by city.
+
+product string,
+quantity_sold INT,
+sales_amount DOUBLE,
+sold_date String,
+stores string,
+city string
+
+
+Task -3 Load the data into the table using load data inpath command on Hive CLI or beeline to load the file
+
+copy the more_sales_data.csv file to the hdfs table location
+
+Check and verify If the data is loaded correctly.
+
+Task-4 Load the data into the table using Hdfs command.
+a) Create the partition directory => city=NOIDA  using hdfs command and put the following data using the hdfs command.
+NOIDA_sales_data.csv
+
+b) Add a partition city=PUNE using hql - Alter table statement and load the data into the respective partartition
+pune_sales_data.csv
+
+Task-5 Load the data into the table using the INSERT OVERWRITE AND INSERT INTO COMMANDS from SALES_STG table into SALES_STG_PART.
+
+Check and verify If the data is loaded correctly.
+
+
+Dataset Required - more_sales_data.csv,NOIDA_sales_data.csv,pune_sales_data.csv

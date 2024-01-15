@@ -1,0 +1,57 @@
+The default date format of Hive is yyyy-MM-dd, and for Timestamp yyyy-MM-dd HH:mm:ss.
+
+Ques- Hive is installed where ?
+
+Teaching Path
+
+History of Hive being created by Facebook - Need of Hive
+
+
+
+
+Create a Database
+Create a Table managed table - non partitioned
+--Show how the directory is created once we create a table
+
+
+load data local inpath '/home/training/Desktop/HiveFiles/sales1.txt' into table hiveassign.Sales_tmp;
+
+load data local inpath '/home/training/Desktop/HiveFiles/sales1.txt' OVERWRITE into table hiveassign.Sales_tmp;
+
+load data local inpath '/home/hadoop/sales1.txt' into table training.Sales_tmp;
+
+
+
+
+Create a Partitioned table - External Partitioned table
+
+set hive.exec.dynamic.partition=true;
+set hive.exec.dynamic.partition.mode=nonstrict;
+set hive.exec.max.dynamic.partitions=1000;
+set hive.exec.max.dynamic.partitions.pernode=1000;
+set hive.enforce.bucketing=true;
+
+
+
+1) CSV format
+2) Parquet Format
+
+
+No of Ways data is loaded into tables - 3 Ways
+
+
+Load data into table
+What is difference b/w the non partitioned and partitioned table
+
+
+Create a partitioned Table
+3ways to load data inot partitioned table-
+1) load data local inpath
+
+
+MSCK REPAIR TABLE
+
+Refer the url for complete use case of Partitioned and Bucketing Table 
+https://sparkbyexamples.com/apache-hive/hive-partitions-explained-with-examples/ 
+
+

@@ -1,0 +1,38 @@
+Amazon EMR version
+emr-6.15.0
+
+Installed applications
+Hadoop 3.3.6, Hive 3.1.3, Hue 4.11.0, Spark 3.4.1
+
+Scala compatible - 2.13 and 2.12
+Scala setup and installation on Windows
+
+https://www.scala-lang.org/download/install.html
+https://www.scala-lang.org/download/2.12.18.html
+
+Set up Scala project in IDEs - Intellj with sbt , maven
+
+https://docs.scala-lang.org/tutorials.html
+
+
+SBT - https://docs.scala-lang.org/getting-started/intellij-track/building-a-scala-project-with-intellij-and-sbt.html
+
+
+
+hadoop@ec2-16-170-164-242.eu-north-1.compute.amazonaws.com
+
+
+Edit the Inbound rules for EMR master or primary node
+VPC-->Security Groups-->sg-094ada02d4bd7d5b0 - ElasticMapReduce-master-->Edit inbound rules
+Type- SSH 
+Source - custom
+My IP
+
+
+To view the Websites Hosted on the Primary Nodes
+
+https://thetechtrainer.wordpress.com/2022/02/22/how-to-connect-to-hue-from-aws-emr/
+
+https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-connect-master-node-proxy.html
+
+

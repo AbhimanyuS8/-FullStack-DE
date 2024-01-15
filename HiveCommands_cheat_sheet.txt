@@ -1,0 +1,129 @@
+1) CREATE DATABASE database_name;
+SHOW DATABASES;
+
+2) Use a database
+USE database_name;
+
+3)Drop a Database
+DROP DATABASE database_name;
+
+4) create table-
+
+
+5) Show tables-
+SHOW TABLES;
+
+
+6) Describe table-
+DESCRIBE table_name;
+DESCRIBE formatted table_name;
+
+LOAD DATA [LOCAL] INPATH 'input_path' [OVERWRITE] INTO TABLE table_name;
+
+
+7) Hive Select Statement syntax-
+SELECT [ALL | DISTINCT] select_expr, select_expr, ...
+FROM table_reference
+[WHERE where_condition]
+[GROUP BY col_list]
+[HAVING having_condition]
+[CLUSTER BY col_list | [DISTRIBUTE BY col_list] [SORT BY col_list]]
+[LIMIT number];
+
+8) Load data into TABLE
+LOAD DATA [LOCAL] INPATH 'input_path' [OVERWRITE] INTO TABLE table_name;
+
+9) Aggregating Data-
+SELECT COUNT(*), SUM(column_name) FROM table_name GROUP BY column_name;
+
+10) Joining Tables-
+SELECT t1.column1, t2.column2 FROM table1 t1 JOIN table2 t2 ON t1.id = t2.id;
+
+11) Sorting Data-
+SELECT * FROM table_name ORDER BY column_name [ASC|DESC];
+
+12) Limiting rows
+SELECT * FROM table_name LIMIT n;
+
+13) Functions:
+
+13a) String Functions:
+CONCAT
+SUBSTRING
+LOWER / UPPER
+TRIM
+LENGTH
+
+13b) Mathematical Functions:
+SUM
+AVG
+MAX
+MIN
+ROUND
+
+13c) Date Functions:
+YEAR
+MONTH
+DAY
+DATEDIFF
+CURRENT_DATE
+
+14) Commenting in SQL
+-- This is a comment
+/* This is a multi-line comment */
+
+
+15) Inserting into TABLE
+
+15a) Insert Into TABLE
+INSERT INTO TABLE target_table SELECT * FROM source_table;
+
+15b) Insert OVERWRITE
+INSERT OVERWRITE TABLE target_table SELECT * FROM source_table;
+
+
+16) Updating Data:
+Hive doesn't directly support the UPDATE command for modifying existing records. Instead, you can achieve similar functionality by using a combination of INSERT, INSERT OVERWRITE, and SELECT queries to replace or modify data.
+
+17) Deleting Data:
+Hive doesn't have a direct DELETE command for deleting specific records. To delete data, you typically drop and recreate the table or use filtering conditions in combination with INSERT OVERWRITE to remove specific records.
+
+18) Transactions:
+Hive traditionally doesn't support transactions in the same way as some other databases. ACID (Atomicity, Consistency, Isolation, Durability) properties are not fully supported in Hive transactions.
+
+Remember, Hive is primarily designed for batch processing and analysis of large datasets rather than online transaction processing (OLTP). Therefore, handling data modifications such as updates and deletes might involve workarounds or different approaches compared to traditional SQL databases.
+
+Always make sure to have backups or a well-thought-out data management strategy when performing modifications in Hive.
+
+19) Add Column:
+ALTER TABLE table_name ADD COLUMNS (new_column_name column_type);
+
+20) Rename Column:
+Hive does not support a direct RENAME COLUMN command. Instead, you can achieve this by creating a new table with the desired column names and data and then dropping the old table.
+
+21) Add Partition:
+ALTER TABLE table_name ADD PARTITION (partition_column='value') LOCATION 'partition_location';
+
+22) Drop Partition
+ALTER TABLE table_name DROP PARTITION (partition_column='value');
+
+23) Rename Partition:
+ALTER TABLE table_name PARTITION (old_partition_column='old_value') RENAME TO PARTITION (new_partition_column='new_value');
+
+24) Change FileFormat:-
+ALTER TABLE table_name SET FILEFORMAT file_format;
+
+25) Change Serde
+ALTER TABLE table_name SET SERDE serde_class_name;
+
+26) Change Table Location:
+ALTER TABLE table_name SET LOCATION 'new_table_location';
+
+27) Update table Location for Partition:
+ALTER TABLE table_name PARTITION (partition_column='value') SET LOCATION 'new_partition_location';
+
+28) Change Table Properties:
+ALTER TABLE table_name CHANGE COLUMN column_name new_column_name new_column_type COMMENT 'new_comment';
+
+
+

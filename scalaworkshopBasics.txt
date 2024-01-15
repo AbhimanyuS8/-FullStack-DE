@@ -1,0 +1,469 @@
+SCALA MODULE 1 AND MODULE 2 CLASS FILES
+=======================================
+
+Difference between val and var variable types
+=============================================
+
+val a = "hello world"
+
+a = "val can not changed"
+
+
+var b = "hello world"
+
+b = "I can change b value"
+
+
+Assigning Block of code
+=======================
+
+val x = {val a =10; val b = 100; b -a}
+
+
+Lazy Evaluation
+===============
+
+lazy val a = scala.io.Source.fromFile("xyzfillskdjflskjflskjljdfl").mkString
+
+val b = sc.textFile("xyz")
+b.take
+
+
+Control Structure
+=================
+
+var x = 5
+
+val s = if (x > 0 && x < 6) 1 else 0
+val s =if (x > 0 && x < 6) "positive" else 0
+
+
+
+var args = "Pavan Kumar"
+println("length is " + args.length)
+var i = 0
+while(i<args.length)
+{
+println(args(i))
+i+= 1
+}
+
+
+var args= "Hello"
+args.foreach(arg=> println(arg))
+args.foreach(arg=> {
+println("this is for loop")
+println(arg)}
+)
+
+args.foreach(println)
+
+
+simple for loop
+
+for ( i <- 1 to 5)
+println(i)
+
+
+var a= "hello world"
+var sum =0
+for (i <- 0 until a.length) sum +=i   //0 to 11
+print(sum)
+
+
+// Advance For loop
+
+for (i <- 0 to 5; j <- 0 to 5)
+println(10*i + j)
+
+
+// can put condition on for loop
+
+for (i <- 0 to 5; j <- 0 to 5 if i==j)
+println(10*i + j)
+
+for (i <- 0 to 5; j <- 0 to 5 )
+println(10*i + j)
+
+//For each iteration of your for loop, yield generates a value which will be remembered. 
+It's like the for loop has a buffer you can’t see, and for each iteration of your for loop another item is added to that buffer. When your for loop finishes running, 
+it will return this collection of all the yielded values. 
+
+for (i <- 1 to 5) yield i
+
+
+for (i <- 1 to 5) yield i * 2
+
+
+while loop
+----------
+
+var args = "Pavan Kumar"
+println("length is " + args.length)
+var i = 0
+while(i<args.length)
+{
+println(args(i))
+i+= 1
+}
+
+
+DO-WHILE LOOP
+--------------
+
+A Scala do while loop will execute a set of statements as long as a condition is true. 
+This is like a while-loop. However, there are two differences:
+
+A while-loop checks the condition before entering the loop. 
+A do-while loop checks it after executing the loop.
+This means that a do-while loop will execute at least once. But a while loop may never run.
+
+ var x=7
+    do
+    {
+        println(x)
+        x=x-1
+    }while(x>0);
+
+
+SCALA FUNCTIONS
+===============
+
+
+def area(radius: Int): Double= {
+println("This is a function to perfrom double operations")
+3.14 * radius * radius
+}
+area(10)
+
+// there is no need to specify return statement
+
+def factorial(n: Int): Int = {
+if ( n == 0) 1 else n*factorial(n-1)
+}
+
+
+object Demo {
+   def main(args: Array[String]) {
+      var x = 30;
+
+      if( x < 20 ){
+         println("This is if statement");
+      } else {
+         println("This is else statement");
+      }
+   }
+}
+
+
+Scala Procedure
+---------------
+
+
+def rec_area(length: Float, breath: Float) {
+val area = length * breath
+print(area)}
+
+
+
+SCALA COLLECTIONS
+=================
+
+
+ARRAY
+-----
+
+val array = new Array[Int](10)
+val array = new Array[String](10)
+
+val mystring = Array("pavan", "kumar", "reddy")
+
+for ( x <- mystring ) {
+    println( x )
+}
+
+//if we want to set value
+array(0)  = 10
+array(1) = 2
+
+
+ArrayBuffer
+-----------
+
+import scala.collection.mutable.ArrayBuffer
+
+val a = ArrayBuffer[Int]()
+
+a += 1
+a += (2,3,4,5)
+a ++= Array(6, 7, 8)
+
+
+a.trimEnd(2)
+a.insert(2, 9)
+a.insert(2,0,9,6,1)
+a.remove(2)
+a.remove(2, 3)
+
+
+//common opperation
+
+Array(1,2,3,4).sum
+Array(1,2,3,4).max
+
+val a = Array(1,5,3,2,4)
+scala.util.Sorting.quickSort(a)
+
+
+
+ List
+ =====
+ 
+Creating a Scala List object
+----------------------------
+val list = 1 :: 2 :: 3 :: Nil
+
+val list = List(1,2,3)
+
+Adding Element to List
+-----------------------
+
+val x = List(2)
+
+val y = 1 :: x
+
+val z = 0 :: y
+
+
+delete elements from a Scala List or ListBuffer
+-----------------------------------------------
+
+val originalList = List(5, 1, 4, 3, 2)
+
+val newList = originalList.filter(_ > 2)
+
+
+
+import scala.collection.mutable.ListBuffer
+val x = ListBuffer(1, 2, 3, 4, 5, 6, 7, 8, 9)
+
+
+You can delete one element at a time, by value:
+x -= 5
+
+
+You can delete elements by position:
+x.remove(0)
+
+
+
+List to be saved as the Number type.
+------------------------------------
+
+val x = List[Number](1, 2.0, 33d, 0x1)
+
+The List ‘range’ method
+-----------------------
+
+val x = List.range(1,10)
+
+
+The range function can also take a third argument which serves as a "step" 
+
+val x = List.range(0,10,2)
+
+
+The List ‘fill’ method
+----------------------
+
+val x = List.fill(3)("foo")
+
+The List class ‘tabulate’ method
+--------------------------------
+ The tabulate method creates a new List whose elements are created according to the function you supply
+
+ val x = List.tabulate(5)(n => n * n)
+ 
+ 
+prepend items to a List
+-----------------------
+
+// create a List
+val x = List(1,2,3)
+
+// prepend an element to the list
+val y = 0 :: x
+
+
+Appending and merging Lists
+---------------------------
+
+val a = List(1,2,3)
+
+val b = List(4,5,6)
+
+val c = a ::: b
+
+
+You can also merge two Scala lists using the List's concat method:
+
+val c = List.concat(a, b)
+
+
+Iterating lists with foreach
+----------------------------
+val x = List(1,2,3)
+x.foreach { println }
+
+LIST BUFFER
+------------
+
+import scala.collection.mutable.ListBuffer
+
+var fruits = new ListBuffer[String]()
+
+// add one element at a time to the ListBuffer
+fruits += "Apple"
+fruits += "Banana"
+fruits += "Orange"
+
+// add multiple elements
+fruits += ("Strawberry", "Kiwi", "Pineapple")
+
+// remove one element
+fruits -= "Apple"
+
+// remove multiple elements
+fruits -= ("Banana", "Orange")
+
+// remove multiple elements specified by another sequence
+fruits --= Seq("Kiwi", "Pineapple")
+
+// convert the ListBuffer to a List when you need to
+val fruitsList = fruits.toList
+
+
+SETS
+====
+
+Set is a collection that contains no duplicate elements. 
+There are two kinds of Sets, the immutable and the mutable.
+
+var s : Set[Int] = Set()
+
+var s : Set[Int] = Set(1,1,5,5,7)
+
+var s = Set(1,3,5,7)
+
+
+basic operational methods
+-------------------------
+
+      val fruit = Set("apples", "oranges", "pears")
+      val nums: Set[Int] = Set()
+
+      println( "Head of fruit : " + fruit.head )
+      println( "Tail of fruit : " + fruit.tail )
+      println( "Check if fruit is empty : " + fruit.isEmpty )
+      println( "Check if nums is empty : " + nums.isEmpty )
+
+
+	  
+	  
+	  Concatenating Sets
+	  -------------------
+
+You can use either ++ operator or Set.++() method to concatenate two or more sets, 
+but while adding sets it will remove duplicate elements.
+
+val fruit1 = Set("apples", "oranges", "pears")
+val fruit2 = Set("mangoes", "banana", "oranges")
+
+      // use two or more sets with ++ as operator
+var fruit = fruit1 ++ fruit2
+println( "fruit1 ++ fruit2 : " + fruit )
+
+      // use two sets with ++ as method
+fruit = fruit1.++(fruit2)
+println( "fruit1.++(fruit2) : " + fruit )
+
+
+add elements to a Set in Scala
+
+
+
+Mutable set
+-----------
+
+Add elements to a mutable Set with the +=, ++=, and add methods:
+
+
+
+// use var with mutable
+var set = scala.collection.mutable.Set[Int]()
+
+// add one element
+set += 1
+
+// add multiple elements
+set += (2, 3)
+
+// notice that there is no error when you add a duplicate element
+set += 2
+
+// add elements from any sequence (any TraversableOnce)
+set ++= Vector(4, 5)
+
+set.add(6)
+res4: Boolean = true
+
+scala> set.add(5)
+
+
+
+MAP
+---
+
+ val colors1 = Map("red" -> "#FF0000", "azure" -> "#F0FFFF", "peru" -> "#CD853F")
+ val colors2 = Map("blue" -> "#0033FF", "yellow" -> "#FFFF00", "red" -> "#FF0000")
+ 
+ colors1.keys
+ colors1.values
+ colors1.isEmpty
+ 
+ var colors = colors1 ++ colors2
+ 
+ val mapping = Map("pavan" -> "kumar", "nishant" -> "reddy")
+ val mapping = scala.collection.mutable.Map("pavan" -> "kumar", "nishant" -> "reddy")
+ 
+ mapping("pavan")
+ 
+ 
+ mapping -= "nishant"
+ mapping += ("ajay"-> "sharma")
+ mapping.getOrElse("pavan", 0)
+ 
+ 
+ <- ->
+ Tuples
+ ------
+ 
+ val a = (1,4, "pavan", "kumar")
+ a._1, a._3
+ 
+ 
+ val numPairs = List((2, 5), (3, -7), (20, 56))
+
+ for ((a, b) <- numPairs) {
+
+  println(a * b)
+  
+}
+ 
+
+ 
+
+
+
+
+

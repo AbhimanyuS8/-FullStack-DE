@@ -1,0 +1,36 @@
+
+
+Date 30-12-2023
+
+==============
+To DO 
+==============
+
+
+1) Create All Assignemnts for Hive.
+
+2) Include the DDL and DML Commands like - Change in column name and Datatypes as well.
+
+3) Check on how to launch Beeline beeline
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------
+1) Create the Intro PPT for AWS Services - To be done by Pankaj
+VPN
+SUBNET
+EC2
+keyPair
+Security Group
+IAM Role
+EMR
+Get their Account Created and show them how to launch EMR and connect to Hive
+------------------------------------------------------------------------------------------------------------------------------------------
+
+2) Create the Training Timeline -done
+ 
+
+
+
+

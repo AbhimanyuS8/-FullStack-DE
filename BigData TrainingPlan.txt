@@ -1,0 +1,75 @@
+DEMO HIGH LEVEL POINTS
+
+1) WHAT IS BIG DATA
+PROBLEM and SOLUTION
+
+
+2)What we are offering?
+
+Hadoop
+Hdfs
+YARN
+Hive
+HUE
+Spark with Scala
+Pyspark
+BASIC GIT operations
+
+AWS
+Basic Services of aws to launch and run job on AWS EMR Cluster.
+
+3) Project Implementation 
+End to End Project in Spark Scala Hadoop
+Deployment on aws EMR cluster
+
+4) USP:- The Training will be based on Industry level use case as it is used on Live project.
+Project pro based Training.
+
+
+
+5) JOB OPPROTUNITIES IN MARKET
+
+Different companies using Big DATA
+Fin TECH - mastercard,
+UBER, NetFlix , amazon prime, 
+
+FUTURE PROSPECT IN BIG DATA
+Atleast in 10 years
+
+Action Point AWS account.
+
+Aws basics - Aws basics VPC, SUBNET, SECURITY GROUP, EC2, RDS, EMR
+
+
+Tentative Training Plan
+
+Module 1) => Total 8 days
+1.a) Aws basics VPC, SUBNET, SECURITY GROUP, EC2, RDS, EMR  => 2 days
+2.b) Hadoop, Hdfs ,Yarn, Basic Unix Command => 5 - 6 Days
+
+
+Module 2) Hive => 6- 7 days
+
+Module 3) Scala => 6 - 7 days
+
+Module 4) Spark => 15 days 
+
+Module 5) Pyspark and Project => 5 days
+
+Module 6) AWS Services - AWS Glue Job, AWS Athena, AWS Data Catalog, lamba functions - 5 days
+
+Module 7) Project => 5 days
+
+Module 8) Doubt Clearing Sessions and Resume Preparation:-> 3-4 days
+
+
+
+
+
+ 
+
+
+
+
+
+

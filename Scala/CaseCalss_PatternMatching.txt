@@ -1,0 +1,100 @@
+=============================================================================
+CASE CLASSES
+=============================================================================
+
+https://docs.scala-lang.org/overviews/scala-book/case-classes.html
+
+A case class has all of the functionality of a regular class, and more. When the compiler sees the case keyword in front of a class, it generates code for you, with the following benefits:
+
+Case class constructor parameters are public val fields by default, so accessor methods are generated for each parameter.
+An apply method is created in the companion object of the class, so you don’t need to use the new keyword to create a new instance of the class.
+An unapply method is generated, which lets you use case classes in more ways in match expressions.
+A copy method is generated in the class. You may not use this feature in Scala/OOP code, but it’s used all the time in Scala/FP.
+equals and hashCode methods are generated, which let you compare objects and easily use them as keys in maps.
+A default toString method is generated, which is helpful for debugging.
+
+With apply you don’t need new
+---------------------------------
+case class Person(name: String, relation: String)
+
+val ram = Person("Ram","Friend")
+
+No mutator methods
+----------------------------
+Case class constructor parameters are val fields by default, so an accessor method is generated for each parameter.
+
+ram.name="Shyam" //will give error
+
+An unapply method
+-------------------------------
+trait Person {
+  def name: String
+}
+
+case class Student(name: String, year: Int) extends Person
+
+case class Teacher(name: String, specialty: String) extends Person
+
+
+object PatternMatch extends App {
+
+
+  def getPersonDetails(p: Person): String = {
+    p match {
+      // due to unapply method
+      case Student(name, year) => s"$name is a Student of year $year"
+      case Teacher(name, whatTheyTeach) => s"$name is a teacher and teaches $whatTheyTeach"
+        
+    }
+
+  }
+
+}
+
+=========================================================================
+Pattern Matching
+==========================================================================
+object AllPatternMatch extends App {
+
+
+  val num = Range(-10, 10)
+
+  //  num.foreach(println)
+
+  num.foreach { x =>
+    x match {
+      case 1 => println("One")
+      case 2 => println("Two")
+      case 3 => println("Three")
+      case 4 => println("Four")
+      case 5 => println("Five")
+      case 6 => println("Six")
+      case 0 => println("Zero")
+      case _ if (x > 6) => println(s"$x : Number is greater than Six")
+      case _ => println(s"$x is Negative")
+    }
+  }
+
+  def getClassAsString(x: Any): String = x match {
+    case s: String => s + " is a String"
+    case i: Int => "Int"
+    case f: Float => "Float"
+    case l: List[_] => "List"
+    case p: Person => "Person"
+    case true => "true"
+    case List(0, _, _) => "Three element List with 0 as first element"
+    case List(1, _*) => "a list beginning with one and having n number of elements"
+    case m:Map[String,_] => "$x is a Map which has key as String type and Value as Any type"
+    case _ => "No Match"
+
+  }
+val m = Map(("a"->1))
+  case class Person()
+
+  val c = getClassAsString(List("a", "b"))
+  val p = getClassAsString(Person)
+  println(p)
+
+
+}
+

@@ -1,0 +1,105 @@
+=============================================================================================
+Inheritance In Scala
+=============================================================================================
+Abstract Class are classes used for inheritance like Java. They cannnot be instatiated.
+It is used when You want to create a base class that requires constructor arguments.
+
+abstract class Vehicle(speed:Int) {
+
+  val mph:Int  = speed
+  def race()= println("Racing")
+  def overspeeding(speedLimit:Int):Boolean
+
+  def this()=this(0)
+
+}
+
+// Abstract Classes cannot be instatiated
+
+
+class Car(val name:String,speed:Int) extends Vehicle(speed)
+{
+  override val mph= speed
+// overiding is not needed for abstract members
+  // override def overspeeding(speedLimit:Int)={
+  def overspeeding(speedLimit:Int)={
+    mph> speedLimit
+  }
+
+  override def race()=println("Racing Car")
+
+}
+
+
+object Main extends App {
+
+  val car= new Car("Maruti",100)
+
+  if(car.overspeeding(80)) println(s"${car.name} Car is overspeeding")
+
+}
+
+
+
+===========================================================================================
+TRAITS
+===========================================================================================
+
+
+trait Iterator[A] {
+  def hasNext: Boolean
+  def next(): A
+}
+
+class IntIterator(to: Int) extends Iterator[Int] {
+  private var current = 0
+  override def hasNext: Boolean = current < to
+  override def next(): Int = {
+    if (hasNext) {
+      val t = current
+      current += 1
+      t
+    } else 0
+  }
+}
+
+val iterator = new IntIterator(10)
+iterator.next()  // returns 0
+iterator.next()  // returns 1
+
+
+
+-------------------------------------------------------------------------
+abstract class Animal {
+  val creatureType: String
+
+  def eat: Unit
+}
+
+class Dog extends Animal {
+
+  val creatureType: String = "Canine"
+
+  def eat: Unit = println("crunch crunch")
+
+}
+
+trait Carnivore {
+
+  def eat(animal:Animal):Unit
+}
+
+class Crocodile extends Animal with Carnivore{
+
+   val creatureType: String = "Crocodile"
+  def eat = println(s"crush crush")
+  def eat(animal:Animal) =println(s"I am a $creatureType and I eat ${animal.creatureType}")
+
+}
+
+object Main2 extends App{
+
+  val croc = new Crocodile()
+  croc.eat(new Dog)
+
+

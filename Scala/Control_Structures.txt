@@ -1,0 +1,63 @@
+Control Structures
+===========================================
+====================================================================================================
+if/else/then 
+====================================================================================================
+
+
+var x = 5
+
+val s = if (x > 0 && x < 6) 1 else 0
+val s =if (x > 0 && x < 6) "positive" else 0
+
+====================================================================================================
+foreach
+====================================================================================================
+var args= "Hello"
+
+args.foreach(arg => println(arg))
+
+
+val arry=Array("Ram","Shyam","Bharat","Krishna")
+
+arry.foreach(arg => println(arg))
+
+
+====================================================================================================
+while loop
+====================================================================================================
+
+var args = "Pavan Kumar"
+println("length is " + args.length)
+var i = 0
+while(i<args.length)
+{
+println(args(i))
+i+= 1
+}
+
+====================================================================================================
+DO-WHILE LOOP
+====================================================================================================
+
+A Scala do while loop will execute a set of statements as long as a condition is true. 
+This is like a while-loop. However, there are two differences:
+
+A while-loop checks the condition before entering the loop. 
+A do-while loop checks it after executing the loop.
+This means that a do-while loop will execute at least once. But a while loop may never run.
+
+ var x=7
+    do
+    {
+        println(x)
+        x=x-1
+    }while(x>0);
+
+
+Assignemnts: - 
+
+Using for loop find all the even numbers and prime numbers from 1 to 50
+
+Implement GCD using while Loop
+

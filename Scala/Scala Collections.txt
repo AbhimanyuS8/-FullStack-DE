@@ -1,0 +1,232 @@
+Scala Collections
+
+
+1) ARRAY ==========================
+
+Array is by default mutable object.It is collection of elements which are of same types.
+
+DECLARATION OF ARRAYS--
+
+With Values
+
+val a= Array(1,2,3)
+a(4)    ====> ArrayIndexOutOfBoundsException
+a(0)
+
+var a=new Array[Int](3)   // This can hold three elements
+
+a(1) = 2  // Assigning second element
+
+val mystring = Array("pavan", "kumar", "reddy")
+
+for ( x <- mystring ) {
+    println( x )
+}
+
+//if we want to set value
+array(0)  = 10
+array(1) = 2
+
+ArrayBuffer
+-----------
+
+import scala.collection.mutable.ArrayBuffer
+
+val a = ArrayBuffer[Int]()
+
+a += 1
+a += (2,3,4,5)
+a ++= Array(6, 7, 8)
+
+
+a.trimEnd(2)
+a.insert(2, 9)
+a.insert(2,0,9,6,1)
+a.remove(2)
+a.remove(2, 3)
+
+
+//common opperation
+
+Array(1,2,3,4).sum
+Array(1,2,3,4).max
+
+val a = Array(1,5,3,2,4)
+scala.util.Sorting.quickSort(a)
+
+
+2) *List========================================
+
+ 
+Creating a Scala List object
+----------------------------
+val list = 1 :: 2 :: 3 :: Nil
+
+val list = List(1,2,3)
+
+Adding Element to List
+-----------------------
+
+val x = List(2)
+
+val y = 1 :: x
+
+val z = 0 :: y
+
+
+delete elements from a Scala List or ListBuffer
+-----------------------------------------------
+
+val originalList = List(5, 1, 4, 3, 2)
+
+val newList = originalList.filter(_ > 2)
+
+
+
+import scala.collection.mutable.ListBuffer
+val x = ListBuffer(1, 2, 3, 4, 5, 6, 7, 8, 9)
+
+
+You can delete one element at a time, by value:
+x -= 5
+
+
+You can delete elements by position:
+x.remove(0)
+
+
+
+List to be saved as the Number type.
+------------------------------------
+
+val x = List[Number](1, 2.0, 33d, 0x1)
+
+The List ‘range’ method
+-----------------------
+
+val x = List.range(1,10)
+
+
+The range function can also take a third argument which serves as a "step" 
+
+val x = List.range(0,10,2)
+
+
+The List ‘fill’ method
+----------------------
+
+val x = List.fill(3)("foo")
+
+The List class ‘tabulate’ method
+--------------------------------
+ The tabulate method creates a new List whose elements are created according to the function you supply
+
+ val x = List.tabulate(5)(n => n * n)
+ 
+ 
+prepend items to a List
+-----------------------
+
+// create a List
+val x = List(1,2,3)
+
+// prepend an element to the list
+val y = 0 :: x
+
+
+Appending and merging Lists
+---------------------------
+
+val a = List(1,2,3)
+
+val b = List(4,5,6)
+
+val c = a ::: b
+
+
+You can also merge two Scala lists using the List's concat method:
+
+val c = List.concat(a, b)
+
+
+Iterating lists with foreach
+----------------------------
+val x = List(1,2,3)
+x.foreach { println }
+
+
+------------------------------------------------------------------------------------------------------------
+LIST BUFFER
+------------------------------------------------------------------------------------------------------------
+
+import scala.collection.mutable.ListBuffer
+
+var fruits = new ListBuffer[String]()
+
+// add one element at a time to the ListBuffer
+fruits += "Apple"
+fruits += "Banana"
+fruits += "Orange"
+
+// add multiple elements
+fruits += ("Strawberry", "Kiwi", "Pineapple")
+
+// remove one element
+fruits -= "Apple"
+
+// remove multiple elements
+fruits -= ("Banana", "Orange")
+
+// remove multiple elements specified by another sequence
+fruits --= Seq("Kiwi", "Pineapple")
+
+// convert the ListBuffer to a List when you need to
+val fruitsList = fruits.toList
+
+
+
+------------------------------------------------------------------------------------------------------------
+Tuples - A tuple gives you a way to store a group of heterogeneous items in a container
+------------------------------------------------------------------------------------------------------------
+case class Person(name: String)
+
+val d = ("Debi", 95)
+
+val t = (3, "Three", new Person("Al"))
+
+t._1
+t._2
+t._3
+
+
+
+-------------------------------------------------------------------------------------------------------------
+OPERATIONS WIth STRING
+-------------------------------------------------------------------------------------------------------------
+"hello world".split(" ")
+"hello world".split(" ")
+
+val s = "bread, milk, butter, Coco Puffs"
+
+s.split(",")
+
+val speech = """Four score and
+#seven years ago""".stripMargin('#')
+
+"100".toInt
+"100".toDouble
+
+-------------------------------------------------------------------------------------------------------------
+STRING INTERPOLATION
+-------------------------------------------------------------------------------------------------------------
+
+
+val name="Shyam"
+
+val age = 16
+
+val weight= 50
+
+println(s"$name is $age years old, and weighs $weight kg.")
+
+
